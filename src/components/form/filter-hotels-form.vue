@@ -1,17 +1,17 @@
 <template>
   <form action="" class="reserve-form__form">
     <div class="reserve-form__form__inputs">
-      <select-autocomplete />
-      <text-field />
+      <select-destiny />
+      <field-name />
     </div>
     <custom-button @click="hotelsStore.filterHotels">{{ buttonText }}</custom-button>
   </form>
 </template>
 
 <script setup lang="ts">
-import SelectAutocomplete from '../components/ui/select-autocomplete.vue'
-import TextField from '../components/ui/text-field.vue'
-import CustomButton from '../components/ui/custom-button.vue'
+import SelectDestiny from './select-destiny.vue'
+import FieldName from './field-name.vue'
+import CustomButton from '../custom-button.vue'
 import { computed } from 'vue'
 import { useHotelsStore } from 'src/stores/hotelsStore'
 import { storeToRefs } from 'pinia'

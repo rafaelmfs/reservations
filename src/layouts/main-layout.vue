@@ -14,7 +14,7 @@
 <style lang="scss">
 .layout {
   &__container {
-    background-color: $gray-100;
+    background-color: $grey-1;
   }
   &__header {
     background-color: #fff;

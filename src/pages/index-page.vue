@@ -5,12 +5,22 @@
     </div>
     <filter-hotels-form />
   </div>
+
+  <div class="bredcrumbs__order">
+    <breadcumb-pages />
+    <sort-dropdown />
+  </div>
+
+  <hotels-list />
 </template>
 
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import FilterHotelsForm from '../components/filter-hotels-form.vue'
+import FilterHotelsForm from '../components/form/filter-hotels-form.vue'
+import BreadcumbPages from 'src/components/breadcumb-pages.vue'
+import SortDropdown from 'src/components/sort-dropdown.vue'
 import { useHotelsStore } from 'src/stores/hotelsStore'
+import HotelsList from 'src/components/hotels-list.vue'
 
 const hotelsStore = useHotelsStore()
 
@@ -29,14 +39,21 @@ onMounted(async () => {
   }
   &__header {
     padding: 1rem 2rem;
-    border-bottom: 1px solid $gray-600;
+    border-bottom: 1px solid $grey-6;
     h1 {
       margin: 0;
       font-size: 2rem;
       line-height: 1;
-      color: $gray-600;
+      color: $grey-6;
       font-weight: 500;
     }
   }
+}
+
+.bredcrumbs__order {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 2rem 0;
 }
 </style>

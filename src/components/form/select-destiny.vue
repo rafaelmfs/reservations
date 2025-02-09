@@ -17,12 +17,10 @@ const { filters } = storeToRefs(hotelsStore)
 const options = ref(places)
 
 function filterFn(inputValue: string, update: (callbackFn: () => void) => void) {
-  console.log(inputValue)
   if (inputValue === '') {
     update(() => {
       options.value = places
     })
-    console.log('Dentro do if')
 
     return
   }
@@ -68,7 +66,7 @@ function filterFn(inputValue: string, update: (callbackFn: () => void) => void) 
 }
 
 .autocomplete-label {
-  color: $gray-500;
+  color: $grey-5;
   font-weight: 500;
   font-size: 1rem;
 

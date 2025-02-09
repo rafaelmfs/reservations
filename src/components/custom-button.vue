@@ -13,6 +13,7 @@ const {
 <template>
   <q-btn
     rounded
+    unelevated
     size="md"
     :class="['custom-button', `custom-button--${variant}`]"
     :type="type"
