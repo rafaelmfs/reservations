@@ -18,7 +18,7 @@ describe('Hotels', () => {
     }
 
     const hotelsStorage = HotelsStorage.getInstance()
-    const filteredHotels = hotelsStorage.filterByPlace(place.placeId).getHotels()
+    const filteredHotels = hotelsStorage.filterByPlace(place.placeId).getHotels().hotels
 
     expect(Array.isArray(filteredHotels)).toBeTruthy()
     expect(filteredHotels.length).toBeGreaterThan(0)
@@ -28,9 +28,6 @@ describe('Hotels', () => {
         const stateNames = [name.toLocaleLowerCase(), shortname.toLocaleLowerCase()]
         const pass = stateNames.includes(hotel.address.state.toLocaleLowerCase())
 
-        if (!pass) {
-          console.log(hotel)
-        }
         return pass
       }),
     ).toBeTruthy()
@@ -39,14 +36,14 @@ describe('Hotels', () => {
   it('Shoud be able to filter by name', () => {
     const hotelName = 'Baia Cabrália Hotel.'
     const hotelsStorage = HotelsStorage.getInstance()
-    const filteredHotels = hotelsStorage.filterByName({ name: hotelName }).getHotels()
+    const filteredHotels = hotelsStorage.filterByName({ name: hotelName }).getHotels().hotels
 
     expect(Array.isArray(filteredHotels)).toBeTruthy()
   })
 
   it('Shoud be able to paginate', () => {
     const hotelsStorage = HotelsStorage.getInstance()
-    const paginatedHotels = hotelsStorage.getHotels(1)
+    const paginatedHotels = hotelsStorage.getHotels(1).hotels
 
     expect(Array.isArray(paginatedHotels)).toBeTruthy()
     expect(paginatedHotels.length).toBeLessThanOrEqual(10)
@@ -54,7 +51,7 @@ describe('Hotels', () => {
 
   it('Shoud be able to order by price ASC', () => {
     const hotelsStorage = HotelsStorage.getInstance()
-    const orderedHotels = hotelsStorage.orderByPrice({ desc: false }).getHotels(1)
+    const orderedHotels = hotelsStorage.orderByPrice({ desc: false }).getHotels(1).hotels
 
     expect(Array.isArray(orderedHotels)).toBeTruthy()
 
@@ -71,7 +68,7 @@ describe('Hotels', () => {
 
   it('Shoud be able to order by stars', () => {
     const hotelsStorage = HotelsStorage.getInstance()
-    const orderedHotels = hotelsStorage.orderByStars({ desc: true }).getHotels(1)
+    const orderedHotels = hotelsStorage.orderByStars({ desc: true }).getHotels(1).hotels
 
     expect(Array.isArray(orderedHotels)).toBeTruthy()
 

@@ -48,7 +48,8 @@ interface HotelsStorageProperties {
   clearFilters: () => HotelsStorage
   orderByPrice: (params: OrderParams) => HotelsStorage
   orderByStars: (params: OrderParams) => HotelsStorage
-  getHotels: (page?: number) => Hotel[]
+  getHotels: (page?: number) => { hotels: Hotel[]; lastPage: number }
+  loadItems: () => Promise<void>
 }
 
 export class HotelsStorage implements HotelsStorageProperties {
@@ -123,17 +124,18 @@ export class HotelsStorage implements HotelsStorageProperties {
 
   getHotels(page?: number) {
     if (this.isLoading) {
-      return []
+      return { hotels: [], lastPage: 1 }
     }
 
     if (!page) {
-      return this.filteredHotels
+      return { hotels: this.filteredHotels, lastPage: 1 }
     }
 
     const pageSize = 10
     const start = (page - 1) * pageSize
     const end = start + pageSize
+    const lastPage = Math.ceil(this.filteredHotels.length / pageSize)
 
-    return this.filteredHotels.slice(start, end)
+    return { hotels: this.filteredHotels.slice(start, end), lastPage }
   }
 }

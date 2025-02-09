@@ -8,84 +8,116 @@ type Filters = {
     value: string
     description: string
   }
-  page: number
 }
 
-type OrderByTypes = 'price' | 'rating'
+type Pagination = {
+  currentPage: number
+  lastPage: number
+}
+
+export type OrderByTypes = 'price' | 'rating'
 
 interface HotelsStoreState {
   filters: Filters
   sortedBy: OrderByTypes
   hotels: Hotel[]
   isFiltered: boolean
+  pagination: Pagination
 }
 
 const hotelsStorage = HotelsStorage.getInstance()
 
+const initialState: HotelsStoreState = {
+  filters: {},
+  isFiltered: false,
+  sortedBy: 'price',
+  hotels: [],
+  pagination: {} as Pagination,
+}
+
 export const useHotelsStore = defineStore('hotelsStore', {
-  state: (): HotelsStoreState => ({
-    filters: {
-      page: 1,
-    },
-    isFiltered: false,
-    sortedBy: 'price',
-    hotels: [],
-  }),
+  state: (): HotelsStoreState => initialState,
   actions: {
     async loadHotels() {
       await hotelsStorage.loadItems()
-      this.hotels = hotelsStorage.getHotels(1)
+
+      const result = hotelsStorage.getHotels(1)
+
+      this.hotels = result.hotels
+      this.pagination = {
+        lastPage: result.lastPage,
+        currentPage: 1,
+      }
     },
+
     setFilters(filters: Filters) {
       this.filters = filters
     },
     filterHotels() {
-      const currentState = this.$state
-      const placeId = Number(currentState.filters?.destiny?.value)
-      const hotelName = currentState.filters?.name
+      const { filters } = this.$state
+      const placeId = Number(filters?.destiny?.value)
+      const hotelName = filters?.name
 
-      if (placeId && hotelName) {
-        this.isFiltered = true
-        this.hotels = hotelsStorage
-          .filterByPlace(placeId)
-          .filterByName({ name: hotelName })
-          .getHotels(1)
-      }
+      let result = hotelsStorage
 
       if (placeId) {
-        this.isFiltered = true
-        this.hotels = hotelsStorage.filterByPlace(placeId).getHotels(1)
+        result = result.filterByPlace(placeId)
       }
 
       if (hotelName) {
-        this.isFiltered = true
-        this.hotels = hotelsStorage.filterByName({ name: hotelName }).getHotels(1)
+        result = result.filterByName({ name: hotelName })
+      }
+
+      const hotelsResult = result.getHotels(1)
+
+      this.$state = {
+        ...this.$state,
+        isFiltered: true,
+        hotels: hotelsResult.hotels,
+        pagination: {
+          currentPage: 1,
+          lastPage: hotelsResult.lastPage,
+        },
       }
     },
-    loadMoreHotels(nextPage: number) {
-      this.hotels = this.hotels.concat(hotelsStorage.getHotels(nextPage))
+    loadMoreHotels() {
+      const nextPage = this.pagination.currentPage + 1
+      const result = hotelsStorage.getHotels(nextPage)
+
+      this.pagination = {
+        currentPage: nextPage,
+        lastPage: result.lastPage,
+      }
+      this.hotels = this.hotels.concat(result.hotels)
     },
     clearFilters() {
-      this.filters = {
-        name: '',
-        destiny: {
-          label: '',
-          value: '',
-          description: '',
+      const result = hotelsStorage.clearFilters().getHotels(1)
+
+      this.$state = {
+        ...initialState,
+        hotels: result.hotels,
+        pagination: {
+          currentPage: 1,
+          lastPage: result.lastPage,
         },
-        page: 1,
       }
-      this.hotels = hotelsStorage.clearFilters().getHotels(1)
-      this.isFiltered = false
     },
     sortingHotels(orderBy: OrderByTypes) {
       this.sortedBy = orderBy
-      if (orderBy === 'price') {
-        this.hotels = hotelsStorage.orderByPrice({ desc: false }).getHotels(1)
-        return this
-      }
+      const sortedHotels =
+        orderBy === 'price'
+          ? hotelsStorage.orderByPrice({ desc: false })
+          : hotelsStorage.orderByStars({ desc: false })
 
-      this.hotels = hotelsStorage.orderByStars({ desc: false }).getHotels(1)
+      const result = sortedHotels.getHotels(1)
+
+      console.log({ result })
+
+      this.hotels = result.hotels
+      this.pagination = {
+        currentPage: 1,
+        lastPage: result.lastPage,
+      }
     },
   },
   getters: {},
