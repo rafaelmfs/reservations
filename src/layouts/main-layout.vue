@@ -1,5 +1,39 @@
 <template>
-  <q-layout view="lHh Lpr lFf"> <router-view></router-view> </q-layout>
+  <q-layout class="layout__container" view="hHh Lpr fFr">
+    <q-header class="layout__header">
+      <img src="../assets/logo.png" alt="" />
+    </q-header>
+    <q-page-container class="layout__page-content">
+      <router-view></router-view>
+    </q-page-container>
+  </q-layout>
 </template>
 
 <script setup lang="ts"></script>
+
+<style lang="scss">
+.layout {
+  &__container {
+    background-color: $gray-100;
+  }
+  &__header {
+    background-color: #fff;
+    box-shadow: 0 2px 16px #0002;
+    padding: 0.5rem 2rem;
+
+    img {
+      width: 137px;
+      height: auto;
+    }
+  }
+
+  &__page-content {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 3rem;
+    padding: 2rem 8rem;
+  }
+}
+</style>
