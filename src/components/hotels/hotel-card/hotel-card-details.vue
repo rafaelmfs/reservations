@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import RatingsStars from '../../ratings-stars.vue'
+
 import { type IconsKeys, iconsMapping } from 'src/constants/icons-mapping'
 import type { Hotel } from 'src/storage/hotels/Hotels'
 import { computed } from 'vue'
@@ -17,10 +19,7 @@ const refundableText = computed(() => (hasRefundableRoom ? 'Reembols√°vel' : 'N√
     </div>
     <div class="hotel-card__details__info__amenites">
       <div>
-        <div class="ratings">
-          <span class="text-caption text-grey-5">{{ stars }}</span>
-          <q-rating no-reset :model-value="Number(stars)" size="1.5em" color="orange" readonly />
-        </div>
+        <ratings-stars :stars="Number(stars)" />
         <div class="amenites">
           <q-icon
             v-for="(amenite, index) in amenities"
@@ -83,15 +82,6 @@ const refundableText = computed(() => (hasRefundableRoom ? 'Reembols√°vel' : 'N√
         align-items: center;
         gap: 0.5rem;
         padding: 1rem 0;
-      }
-
-      .ratings {
-        display: flex;
-        align-items: center;
-        gap: 0.25rem;
-
-        padding-right: 0.5rem;
-        border-right: 2px solid $grey;
       }
 
       .amenites {

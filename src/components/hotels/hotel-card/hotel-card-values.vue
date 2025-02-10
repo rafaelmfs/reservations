@@ -21,7 +21,7 @@ const formattedPrice = computed(() => formatCurrencyValue(value))
       <span>R$ {{ formattedPrice }} / noite</span>
       <span>impostos inclusos</span>
     </div>
-    <custom-button>Selecionar</custom-button>
+    <custom-button @click="$emit('openDrawer', true)">Selecionar</custom-button>
   </div>
 </template>
 

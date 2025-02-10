@@ -1,5 +1,5 @@
 <template>
-  <q-layout class="layout__container" view="hHh Lpr fFr">
+  <q-layout class="layout__container" view="hHh lpr fFr">
     <q-header class="layout__header">
       <img src="../assets/logo.png" alt="" />
     </q-header>

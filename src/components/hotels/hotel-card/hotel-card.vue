@@ -1,22 +1,28 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import type { Hotel } from 'src/storage/hotels/Hotels'
 
 import HotelCardDetails from './hotel-card-details.vue'
-import hotelCardCarousel from './hotel-card-carousel.vue'
-import hotelCardValues from './hotel-card-values.vue'
+import HotelCarousel from '../hotel-carousel.vue'
+import HotelCardValues from './hotel-card-values.vue'
+import DetailsDrawer from '../details-drawer.vue'
 
 const { hotel } = defineProps<{
   hotel: Hotel
 }>()
-
 const carrouselImages = computed(() => Array.from(new Set([hotel.thumb, ...hotel.images])))
+
+const showDrawer = ref(false)
+
+function openDrawer(open: boolean) {
+  showDrawer.value = open
+}
 </script>
 
 <template>
   <div class="hotel-card__container" style="width: 100%">
     <div class="hotel-card__details__container">
-      <hotel-card-carousel :images="carrouselImages" />
+      <hotel-carousel :images="carrouselImages" />
       <hotel-card-details
         :address="hotel.address"
         :amenities="hotel.amenities"
@@ -25,8 +31,10 @@ const carrouselImages = computed(() => Array.from(new Set([hotel.thumb, ...hotel
         :hasRefundableRoom="hotel.hasRefundableRoom"
       />
     </div>
-    <hotel-card-values :value="hotel.price" />
+    <hotel-card-values @open-drawer="openDrawer" :value="hotel.price" />
   </div>
+
+  <details-drawer :hotel="hotel" @open-drawer="openDrawer" :open="showDrawer" />
 </template>
 
 <style lang="scss">
