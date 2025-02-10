@@ -7,7 +7,7 @@ const { stars, withDivider = false } = defineProps<{
 
 <template>
   <div class="ratings" :class="{ divider: withDivider }">
-    <span class="text-grey-5">{{ stars }}</span>
+    <span class="text-grey-5">{{ stars.toFixed(1) }}</span>
     <q-rating no-reset :model-value="stars" size="1.5rem" color="orange" readonly />
   </div>
 </template>

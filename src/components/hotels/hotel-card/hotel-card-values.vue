@@ -25,7 +25,7 @@ const formattedPrice = computed(() => formatCurrencyValue(value))
         <span>impostos inclusos</span>
       </div>
     </div>
-    <custom-button @click="$emit('openDrawer', true)">Selecionar</custom-button>
+    <custom-button @click="$emit('openDrawer')">Selecionar</custom-button>
   </div>
 </template>
 

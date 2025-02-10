@@ -1,38 +1,52 @@
 <script lang="ts" setup>
-import type { Hotel } from 'src/storage/hotels/Hotels'
-import { computed, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 import RatingsStars from '../ratings-stars.vue'
 import hotelCarousel from './hotel-carousel.vue'
 import { type IconsKeys, iconsMapping } from 'src/constants/icons-mapping'
 import CustomButton from 'components/custom-button.vue'
+import { useDrawerHotelStore } from 'src/stores/drawerHotelStore'
+import { storeToRefs } from 'pinia'
 
-const { open, hotel } = defineProps<{
-  open: boolean
-  hotel: Hotel
-}>()
+const drawerHotelStore = useDrawerHotelStore()
+const { isOpen, selectedHotel } = storeToRefs(drawerHotelStore)
+
+const screenWidth = ref(window.innerWidth)
 
 const drawerWidth = computed(() => {
-  const screenWidth = window.innerWidth
   const percent = window.innerWidth > 1024 ? 0.6 : 0.8
 
-  return screenWidth * percent
+  return screenWidth.value * percent
 })
 
-const carrouselImages = computed(() => Array.from(new Set([hotel.thumb, ...hotel.images])))
+const carrouselImages = computed(() =>
+  Array.from(new Set([selectedHotel.value.thumb, ...selectedHotel.value.images])),
+)
 
 const DEFAULT_DISPLAY_ICONS_COUT = 4
 const iconsLimit = ref(DEFAULT_DISPLAY_ICONS_COUT)
-const iconsToDisplay = computed(() => hotel.amenities.slice(0, iconsLimit.value))
+const iconsToDisplay = computed(() => selectedHotel.value.amenities.slice(0, iconsLimit.value))
 
 function showAllIcons(showAll: boolean) {
-  iconsLimit.value = showAll ? hotel.amenities.length : DEFAULT_DISPLAY_ICONS_COUT
+  iconsLimit.value = showAll ? selectedHotel.value.amenities.length : DEFAULT_DISPLAY_ICONS_COUT
 }
+
+const updateWidth = () => {
+  screenWidth.value = window.innerWidth
+}
+
+onMounted(() => {
+  window.addEventListener('resize', updateWidth)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', updateWidth)
+})
 </script>
 
 <template>
   <q-drawer
-    @update:model-value="$emit('open-drawer', false)"
-    :model-value="open"
+    @update:model-value="drawerHotelStore.closeDrawer"
+    :model-value="isOpen"
     :width="drawerWidth"
     side="right"
     overlay
@@ -40,11 +54,11 @@ function showAllIcons(showAll: boolean) {
     class="drawer"
   >
     <header class="drawer__header">
-      <ratings-stars :stars="Number(hotel.stars)" />
+      <ratings-stars :stars="Number(selectedHotel.stars)" />
 
       <div class="drawer__header__info">
-        <strong class="drawer__header__info__name">{{ hotel.name }}</strong>
-        <span class="drawer__header__info__address">{{ hotel.address.fullAddress }}</span>
+        <strong class="drawer__header__info__name">{{ selectedHotel.name }}</strong>
+        <span class="drawer__header__info__address">{{ selectedHotel.address.fullAddress }}</span>
       </div>
     </header>
 
@@ -66,7 +80,7 @@ function showAllIcons(showAll: boolean) {
           </div>
         </div>
         <custom-button
-          v-show="hotel.amenities.length > 4"
+          v-show="selectedHotel.amenities.length > 4"
           variant="secondary"
           @click="showAllIcons(iconsLimit == 4)"
         >
@@ -76,7 +90,7 @@ function showAllIcons(showAll: boolean) {
     </div>
     <div class="drawer__description">
       <span class="title">Conheça um pouco mais</span>
-      <p v-html="hotel.description"></p>
+      <p v-html="selectedHotel.description"></p>
     </div>
   </q-drawer>
 </template>
@@ -112,6 +126,13 @@ function showAllIcons(showAll: boolean) {
     border-radius: 16px;
     overflow: hidden;
     min-height: 500px;
+
+    @media (max-width: 1440px) {
+      min-height: 400px;
+      .q-carousel {
+        max-height: 400px;
+      }
+    }
   }
 
   &__amenites {

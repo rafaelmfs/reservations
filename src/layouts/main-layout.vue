@@ -6,10 +6,14 @@
     <q-page-container class="layout__page-content">
       <router-view></router-view>
     </q-page-container>
+
+    <details-drawer />
   </q-layout>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import DetailsDrawer from 'src/components/hotels/details-drawer.vue'
+</script>
 
 <style lang="scss">
 .layout {

@@ -51,7 +51,7 @@ const refundableText = computed(() => (hasRefundableRoom ? 'Reembols√°vel' : 'N√
       grid-template-columns: 1fr 1fr;
       border-top-right-radius: 12px;
       border-bottom-left-radius: 0;
-      border-bottom: 1px solid $grey-4;
+      border-bottom: 1px solid $grey-1;
     }
   }
 

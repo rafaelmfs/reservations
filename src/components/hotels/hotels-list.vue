@@ -44,6 +44,10 @@ function loadMoreHotels(_: number, done: (stop: boolean) => void) {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+
+    @media (max-width: 800px) {
+      gap: 2rem;
+    }
   }
 }
 

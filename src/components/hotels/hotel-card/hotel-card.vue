@@ -1,22 +1,21 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import type { Hotel } from 'src/storage/hotels/Hotels'
 
 import HotelCardDetails from './hotel-card-details.vue'
 import HotelCarousel from '../hotel-carousel.vue'
 import HotelCardValues from './hotel-card-values.vue'
-import DetailsDrawer from '../details-drawer.vue'
+import { useDrawerHotelStore } from 'src/stores/drawerHotelStore'
 
 const { hotel } = defineProps<{
   hotel: Hotel
 }>()
 const carrouselImages = computed(() => Array.from(new Set([hotel.thumb, ...hotel.images])))
 
-const showDrawer = ref(false)
+const drawerHotelStore = useDrawerHotelStore()
 
-function openDrawer(open: boolean) {
-  showDrawer.value = open
-  document.body.style.overflow = open ? 'hidden' : 'auto'
+function openDrawer() {
+  drawerHotelStore.openDrawer(hotel)
 }
 </script>
 
@@ -34,8 +33,6 @@ function openDrawer(open: boolean) {
     </div>
     <hotel-card-values @open-drawer="openDrawer" :value="hotel.price" />
   </div>
-
-  <details-drawer :hotel="hotel" @open-drawer="openDrawer" :open="showDrawer" />
 </template>
 
 <style lang="scss">
