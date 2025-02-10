@@ -20,7 +20,7 @@ import FilterHotelsForm from '../components/form/filter-hotels-form.vue'
 import BreadcumbPages from 'src/components/breadcumb-pages.vue'
 import SortDropdown from 'src/components/sort-dropdown.vue'
 import { useHotelsStore } from 'src/stores/hotelsStore'
-import HotelsList from 'src/components/hotels-list.vue'
+import HotelsList from 'src/components/hotels/hotels-list.vue'
 
 const hotelsStore = useHotelsStore()
 
@@ -54,6 +54,7 @@ onMounted(async () => {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  padding: 2rem 0;
+  padding: 1rem 0;
+  align-items: center;
 }
 </style>
