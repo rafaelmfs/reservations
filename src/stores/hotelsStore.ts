@@ -18,6 +18,7 @@ type Pagination = {
 export type OrderByTypes = 'price' | 'rating'
 
 interface HotelsStoreState {
+  isLoading: boolean
   filters: Filters
   sortedBy: OrderByTypes
   hotels: Hotel[]
@@ -28,6 +29,7 @@ interface HotelsStoreState {
 const hotelsStorage = HotelsStorage.getInstance()
 
 const initialState: HotelsStoreState = {
+  isLoading: true,
   filters: {},
   isFiltered: false,
   sortedBy: 'price',
@@ -48,6 +50,7 @@ export const useHotelsStore = defineStore('hotelsStore', {
         lastPage: result.lastPage,
         currentPage: 1,
       }
+      this.isLoading = false
     },
 
     setFilters(filters: Filters) {
@@ -107,7 +110,7 @@ export const useHotelsStore = defineStore('hotelsStore', {
       const sortedHotels =
         orderBy === 'price'
           ? hotelsStorage.orderByPrice({ desc: false })
-          : hotelsStorage.orderByStars({ desc: false })
+          : hotelsStorage.orderByStars({ desc: true })
 
       const result = sortedHotels.getHotels(1)
 

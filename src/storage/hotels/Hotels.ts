@@ -64,6 +64,31 @@ export class HotelsStorage implements HotelsStorageProperties {
     this.filteredHotels = []
   }
 
+  formatHotelsObject(hotels: Hotel[]): Hotel[] {
+    return hotels.map((item) => {
+      const amenities = item.amenities
+        ? item.amenities?.filter((amenit) => !Array.isArray(amenit))
+        : []
+
+      return {
+        id: item.id,
+        favorite: item.favorite,
+        name: item.name,
+        description: item.description,
+        stars: item.stars,
+        thumb: item.thumb,
+        hasBreakFast: item.hasBreakFast,
+        hasRefundableRoom: item.hasRefundableRoom,
+        hasAgreement: item.hasAgreement,
+        address: item.address,
+        images: item.images,
+        roomsQuantity: item.roomsQuantity,
+        price: item.price,
+        amenities,
+      }
+    })
+  }
+
   public static getInstance(): HotelsStorage {
     if (!HotelsStorage.instance) {
       HotelsStorage.instance = new HotelsStorage()
@@ -75,10 +100,18 @@ export class HotelsStorage implements HotelsStorageProperties {
   async loadItems(): Promise<void> {
     if (!this.hotels.length) {
       const response = await import('./hotel.json')
-      this.hotels = response.default as PlaceHotel[]
+      const receivedHotels = response.default as PlaceHotel[]
+
+      const formattedHotelsObject: PlaceHotel[] = receivedHotels.map((item) => ({
+        placeId: item.placeId,
+        hotels: this.formatHotelsObject(item.hotels),
+      }))
+      this.hotels = formattedHotelsObject
     }
 
-    this.filteredHotels = this.hotels.map((item) => item.hotels).flat()
+    const allHotels = this.hotels.map((item) => item.hotels).flat()
+
+    this.filteredHotels = allHotels
     this.isLoading = false
   }
 
