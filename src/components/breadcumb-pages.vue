@@ -8,7 +8,7 @@ const { filters, isFiltered } = storeToRefs(hotelsStore)
 
 const currentPage = computed(() => {
   const defaultMessage = 'Hospedagem'
-  if (isFiltered.value) {
+  if (isFiltered.value && filters.value.destiny?.label) {
     const filterCityName = filters.value.destiny?.label.split(',')[0]
     return `${defaultMessage} em ${filterCityName}`
   }

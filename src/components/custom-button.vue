@@ -1,9 +1,5 @@
 <script setup lang="ts">
-const {
-  variant = 'primary',
-  type = 'button',
-  onClick,
-} = defineProps<{
+const { variant = 'primary', type = 'button' } = defineProps<{
   variant?: 'primary' | 'secondary'
   type?: string
   onClick?: () => void
@@ -17,7 +13,7 @@ const {
     size="md"
     :class="['custom-button', `custom-button--${variant}`]"
     :type="type"
-    @click.prevent="onClick?.()"
+    @click="$emit('click')"
   >
     <slot />
   </q-btn>

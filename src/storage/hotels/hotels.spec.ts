@@ -43,10 +43,14 @@ describe('Hotels', () => {
 
   it('Shoud be able to paginate', () => {
     const hotelsStorage = HotelsStorage.getInstance()
-    const paginatedHotels = hotelsStorage.getHotels(1).hotels
+    const paginatedHotels = hotelsStorage.getHotels(1)
+    const { hotels, lastPage } = paginatedHotels
 
-    expect(Array.isArray(paginatedHotels)).toBeTruthy()
-    expect(paginatedHotels.length).toBeLessThanOrEqual(10)
+    expect(paginatedHotels).toHaveProperty('lastPage')
+    expect(paginatedHotels).toHaveProperty('hotels')
+    expect(Array.isArray(hotels)).toBeTruthy()
+    expect(hotels.length).toBeLessThanOrEqual(10)
+    expect(typeof lastPage).toBe('number')
   })
 
   it('Shoud be able to order by price ASC', () => {

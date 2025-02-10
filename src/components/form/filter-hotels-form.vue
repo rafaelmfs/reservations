@@ -1,10 +1,10 @@
 <template>
-  <form action="" class="reserve-form__form">
+  <form @submit.prevent="hotelsStore.filterHotels" action="" class="reserve-form__form">
     <div class="reserve-form__form__inputs">
       <select-destiny />
       <field-name />
     </div>
-    <custom-button @click="hotelsStore.filterHotels">{{ buttonText }}</custom-button>
+    <custom-button type="submit">{{ buttonText }}</custom-button>
   </form>
 </template>
 

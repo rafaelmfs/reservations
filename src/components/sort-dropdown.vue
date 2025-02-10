@@ -57,16 +57,9 @@ function handleSelectOrderBy(value: OrderByTypes) {
 <style lang="scss">
 .dropdown-button {
   font-style: italic;
+
   .q-btn-dropdown__arrow {
     margin-left: 0;
-  }
-
-  &:hover {
-    background-color: transparent;
-
-    & .q-focus-helper {
-      background-color: transparent;
-    }
   }
 }
 </style>

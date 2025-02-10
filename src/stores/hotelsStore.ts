@@ -58,6 +58,14 @@ export const useHotelsStore = defineStore('hotelsStore', {
     },
     filterHotels() {
       const { filters } = this.$state
+      const filtersFieldsIsEmpty = !filters.destiny?.label && !filters.name
+      const mustClearFilters = filtersFieldsIsEmpty && this.$state.isFiltered
+
+      if (mustClearFilters) {
+        this.clearFilters()
+        return
+      }
+
       const placeId = Number(filters?.destiny?.value)
       const hotelName = filters?.name
 
@@ -113,8 +121,6 @@ export const useHotelsStore = defineStore('hotelsStore', {
           : hotelsStorage.orderByStars({ desc: true })
 
       const result = sortedHotels.getHotels(1)
-
-      console.log({ result })
 
       this.hotels = result.hotels
       this.pagination = {
