@@ -45,6 +45,11 @@ function openDrawer(open: boolean) {
     display: grid;
     grid-template-columns: 80% 20%;
     gap: 0.5rem;
+
+    @media (max-width: 800px) {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
   }
 }
 </style>

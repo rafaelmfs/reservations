@@ -62,4 +62,12 @@ function handleSelectOrderBy(value: OrderByTypes) {
     margin-left: 0;
   }
 }
+
+@media (max-width: 500px) {
+  .dropdown-button,
+  span {
+    font-size: 1rem;
+    line-height: 1;
+  }
+}
 </style>

@@ -55,4 +55,22 @@ function loadMoreHotels(_: number, done: (stop: boolean) => void) {
   font-weight: 500;
   color: $grey-5;
 }
+
+@media (max-width: 1440px) {
+  .q-carousel {
+    max-height: 300px;
+  }
+}
+
+@media (max-width: 600px) {
+  .q-carousel {
+    max-height: 200px;
+  }
+}
+
+@media (max-width: 400px) {
+  .q-carousel {
+    max-height: 160px;
+  }
+}
 </style>

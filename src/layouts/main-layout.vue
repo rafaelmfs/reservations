@@ -34,6 +34,10 @@
     flex-direction: column;
     margin-top: 3rem;
     padding: 2rem 8rem;
+
+    @media (max-width: 1440px) {
+      padding: 2rem 4rem;
+    }
   }
 }
 </style>

@@ -14,12 +14,16 @@ const formattedPrice = computed(() => formatCurrencyValue(value))
 <template>
   <div class="hotel-card__values">
     <div>
-      <span>A partir de:</span>
-      <span>
-        R$ <strong class="hotel-card__values__price">{{ formattedPrice }}</strong>
-      </span>
-      <span>R$ {{ formattedPrice }} / noite</span>
-      <span>impostos inclusos</span>
+      <div class="values-container">
+        <span>A partir de:</span>
+        <span>
+          R$ <strong class="hotel-card__values__price">{{ formattedPrice }}</strong>
+        </span>
+      </div>
+      <div class="values-container">
+        <span>R$ {{ formattedPrice }} / noite</span>
+        <span>impostos inclusos</span>
+      </div>
     </div>
     <custom-button @click="$emit('openDrawer', true)">Selecionar</custom-button>
   </div>
@@ -53,6 +57,11 @@ const formattedPrice = computed(() => formatCurrencyValue(value))
     flex-direction: column;
     justify-content: space-between;
 
+    .values-container {
+      display: flex;
+      flex-direction: column;
+    }
+
     span {
       font-size: 1rem;
 
@@ -61,6 +70,43 @@ const formattedPrice = computed(() => formatCurrencyValue(value))
       }
 
       color: $grey-5;
+    }
+  }
+
+  @media (max-width: 800px) {
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 12px;
+
+    flex-direction: row;
+
+    & > div {
+      min-width: 50%;
+      gap: 0.5rem;
+    }
+  }
+
+  @media (max-width: 400px) {
+    &__price {
+      font-size: 1.25rem;
+    }
+
+    & > div {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      .values-container {
+        display: flex;
+        flex-direction: column;
+      }
+
+      span {
+        font-size: 0.75rem;
+
+        &:first-child {
+          font-size: 0.75rem;
+        }
+      }
     }
   }
 }

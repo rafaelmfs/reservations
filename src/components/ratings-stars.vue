@@ -7,8 +7,8 @@ const { stars, withDivider = false } = defineProps<{
 
 <template>
   <div class="ratings" :class="{ divider: withDivider }">
-    <span class="text-caption text-grey-5">{{ stars }}</span>
-    <q-rating no-reset :model-value="stars" size="1.5em" color="orange" readonly />
+    <span class="text-grey-5">{{ stars }}</span>
+    <q-rating no-reset :model-value="stars" size="1.5rem" color="orange" readonly />
   </div>
 </template>
 
@@ -22,5 +22,10 @@ const { stars, withDivider = false } = defineProps<{
   gap: 0.25rem;
 
   padding-right: 0.5rem;
+
+  span {
+    line-height: 1;
+    font-size: inherit;
+  }
 }
 </style>

@@ -27,7 +27,6 @@ const refundableText = computed(() => (hasRefundableRoom ? 'Reembols√°vel' : 'N√
             :name="iconsMapping[amenite.key as IconsKeys]"
             :title="amenite.label"
             color="grey-6"
-            size="1rem"
           />
         </div>
       </div>
@@ -47,6 +46,13 @@ const refundableText = computed(() => (hasRefundableRoom ? 'Reembols√°vel' : 'N√
     overflow: hidden;
     background-color: #fff;
     box-shadow: 0 2px 16px #00000015;
+
+    @media (max-width: 800px) {
+      grid-template-columns: 1fr 1fr;
+      border-top-right-radius: 12px;
+      border-bottom-left-radius: 0;
+      border-bottom: 1px solid $grey-4;
+    }
   }
 
   &__info {
@@ -87,6 +93,7 @@ const refundableText = computed(() => (hasRefundableRoom ? 'Reembols√°vel' : 'N√
       .amenites {
         display: flex;
         gap: 0.5rem;
+        font-size: 1rem;
       }
 
       &__refundable {
@@ -95,6 +102,55 @@ const refundableText = computed(() => (hasRefundableRoom ? 'Reembols√°vel' : 'N√
         border-radius: 4px;
         color: #fff;
         text-align: center;
+      }
+    }
+
+    @media (max-width: 800px) {
+      align-items: center;
+
+      &__address {
+        text-align: center;
+      }
+
+      &__name {
+        font-size: 2.25rem;
+        text-align: center;
+      }
+
+      .amenites {
+        font-size: 1.5rem;
+      }
+    }
+
+    @media (max-width: 500px) {
+      &__name {
+        font-size: 1.75rem;
+      }
+
+      .amenites {
+        font-size: 0.875rem;
+      }
+    }
+
+    @media (max-width: 400px) {
+      &__name {
+        font-size: 1.2rem;
+        font-weight: 500;
+        color: $grey-6;
+      }
+      &__address {
+        font-size: 0.75rem;
+        color: $grey-5;
+      }
+
+      .amenites,
+      .ratings,
+      .q-icon {
+        font-size: 0.75rem;
+      }
+
+      &__amenites__refundable {
+        font-size: 0.75rem;
       }
     }
   }

@@ -24,7 +24,6 @@ const { variant = 'primary', type = 'button' } = defineProps<{
   font-weight: 500;
   width: fit-content;
   padding: 0.5rem 2rem;
-  font-size: 1rem;
   align-self: flex-end;
 
   &--primary {
@@ -40,6 +39,21 @@ const { variant = 'primary', type = 'button' } = defineProps<{
     &:hover {
       background-color: $blue-600;
       color: #fff;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .q-btn__content {
+      font-size: 1.25rem;
+    }
+  }
+
+  @media (max-width: 400px) {
+    scale: 0.8;
+
+    .q-btn__content {
+      line-height: 1rem;
+      font-size: 1rem;
     }
   }
 }

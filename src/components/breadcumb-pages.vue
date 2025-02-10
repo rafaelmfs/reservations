@@ -18,9 +18,9 @@ const currentPage = computed(() => {
 </script>
 
 <template>
-  <q-breadcrumbs class="text-grey-5">
+  <q-breadcrumbs class="text-grey-5 bread-cumbs">
     <template v-slot:separator>
-      <q-icon size="1.5em" name="chevron_right" color="primary" />
+      <q-icon size="1.5rem" name="chevron_right" color="primary" />
     </template>
 
     <q-breadcrumbs-el label="Início" />
@@ -28,3 +28,11 @@ const currentPage = computed(() => {
     <q-breadcrumbs-el :label="currentPage" />
   </q-breadcrumbs>
 </template>
+
+<style lang="scss">
+@media (max-width: 500px) {
+  .bread-cumbs {
+    font-size: 1rem;
+  }
+}
+</style>

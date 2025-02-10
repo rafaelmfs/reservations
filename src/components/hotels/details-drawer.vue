@@ -13,8 +13,9 @@ const { open, hotel } = defineProps<{
 
 const drawerWidth = computed(() => {
   const screenWidth = window.innerWidth
+  const percent = window.innerWidth > 1024 ? 0.6 : 0.8
 
-  return screenWidth * 0.6
+  return screenWidth * percent
 })
 
 const carrouselImages = computed(() => Array.from(new Set([hotel.thumb, ...hotel.images])))
@@ -22,7 +23,6 @@ const carrouselImages = computed(() => Array.from(new Set([hotel.thumb, ...hotel
 const DEFAULT_DISPLAY_ICONS_COUT = 4
 const iconsLimit = ref(DEFAULT_DISPLAY_ICONS_COUT)
 const iconsToDisplay = computed(() => hotel.amenities.slice(0, iconsLimit.value))
-// const
 
 function showAllIcons(showAll: boolean) {
   iconsLimit.value = showAll ? hotel.amenities.length : DEFAULT_DISPLAY_ICONS_COUT
