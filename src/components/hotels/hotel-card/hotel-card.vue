@@ -16,6 +16,7 @@ const showDrawer = ref(false)
 
 function openDrawer(open: boolean) {
   showDrawer.value = open
+  document.body.style.overflow = open ? 'hidden' : 'auto'
 }
 </script>
 

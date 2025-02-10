@@ -1,9 +1,14 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 
-const { images, showCounter = false } = defineProps<{
+const {
+  height,
+  images,
+  showCounter = false,
+} = defineProps<{
   images: string[]
   showCounter?: boolean
+  height?: string
 }>()
 
 const slide = ref(1)
@@ -15,7 +20,18 @@ const slideCounter = computed(() => {
 
 <template>
   <div class="carousel__container">
-    <q-carousel swipeable animated v-model="slide" arrows infinite>
+    <q-carousel
+      control
+      control-type="regular"
+      control-color="white"
+      control-text-color="grey-6"
+      :height="height"
+      swipeable
+      animated
+      v-model="slide"
+      arrows
+      infinite
+    >
       <q-carousel-slide
         v-for="(image, index) in images"
         :name="index"
@@ -34,7 +50,7 @@ const slideCounter = computed(() => {
 
 .carousel__counter {
   position: absolute;
-  bottom: 16px;
+  bottom: 1rem;
   left: 50%;
   transform: translateX(-50%);
   padding: 2px 8px;
@@ -42,6 +58,6 @@ const slideCounter = computed(() => {
   background-color: #0008;
   border-radius: 12px;
 
-  z-index: 999999;
+  z-index: 99;
 }
 </style>

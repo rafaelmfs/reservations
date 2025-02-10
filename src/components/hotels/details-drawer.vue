@@ -49,7 +49,7 @@ function showAllIcons(showAll: boolean) {
     </header>
 
     <div class="drawer__carousel">
-      <hotel-carousel :images="carrouselImages" show-counter />
+      <hotel-carousel height="500px" :images="carrouselImages" show-counter />
     </div>
 
     <div class="drawer__amenites">
@@ -109,9 +109,9 @@ function showAllIcons(showAll: boolean) {
   }
 
   &__carousel {
-    border-radius: 8px;
+    border-radius: 16px;
     overflow: hidden;
-    min-height: 300px;
+    min-height: 500px;
   }
 
   &__amenites {

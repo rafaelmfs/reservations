@@ -22,7 +22,7 @@
     padding: 0.5rem 2rem;
 
     img {
-      width: 137px;
+      width: 8rem;
       height: auto;
     }
   }

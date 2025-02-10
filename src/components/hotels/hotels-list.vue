@@ -29,12 +29,12 @@ function loadMoreHotels(_: number, done: (stop: boolean) => void) {
 
     <template v-slot:loading>
       <div class="row justify-center q-my-md">
-        <q-spinner-dots color="primary" size="40px" />
+        <q-spinner-dots color="primary" size="2rem" />
       </div>
     </template>
   </q-infinite-scroll>
-  <p v-show="showNoMoreItems" class="no-more-results">Não há mais resultados.</p>
-  <p v-show="noResults" class="no-more-results">Nenhum resultado encontrado.</p>
+  <p v-show="showNoMoreItems" class="no-results">Não há mais resultados.</p>
+  <p v-show="noResults" class="no-results">Nenhum resultado encontrado.</p>
 </template>
 
 <style lang="scss">
