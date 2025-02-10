@@ -19,7 +19,7 @@ const refundableText = computed(() => (hasRefundableRoom ? 'Reembols√°vel' : 'N√
     </div>
     <div class="hotel-card__details__info__amenites">
       <div>
-        <ratings-stars :stars="Number(stars)" />
+        <ratings-stars with-divider :stars="Number(stars)" />
         <div class="amenites">
           <q-icon
             v-for="(amenite, index) in amenities"
