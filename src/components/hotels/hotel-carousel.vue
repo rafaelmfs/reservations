@@ -11,10 +11,10 @@ const {
   height?: string
 }>()
 
-const slide = ref(1)
+const slide = ref(0)
 
 const slideCounter = computed(() => {
-  return `${slide.value}/${images.length}`
+  return `${slide.value + 1}/${images.length}`
 })
 </script>
 
