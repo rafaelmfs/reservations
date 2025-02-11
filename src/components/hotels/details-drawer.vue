@@ -66,7 +66,7 @@ onUnmounted(() => {
       <hotel-carousel height="500px" :images="carrouselImages" show-counter />
     </div>
 
-    <div class="drawer__amenites">
+    <div v-show="selectedHotel.amenities.length > 0" class="drawer__amenites">
       <span class="title">Facilidades do hotel</span>
       <div class="drawer__amenites__content">
         <div class="drawer__amenites__content__icons">
@@ -90,7 +90,8 @@ onUnmounted(() => {
     </div>
     <div class="drawer__description">
       <span class="title">Conheça um pouco mais</span>
-      <p v-html="selectedHotel.description"></p>
+      <p v-if="selectedHotel.description.length > 0" v-html="selectedHotel.description"></p>
+      <p v-else>Este hotel não possui descrição.</p>
     </div>
   </q-drawer>
 </template>
