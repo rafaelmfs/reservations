@@ -43,7 +43,7 @@ export const useHotelsStore = defineStore('hotelsStore', {
     async loadHotels() {
       await hotelsStorage.loadItems()
 
-      const result = hotelsStorage.getHotels(1)
+      const result = hotelsStorage.orderByPrice({ desc: false }).getHotels(1)
 
       this.hotels = result.hotels
       this.pagination = {
@@ -70,13 +70,18 @@ export const useHotelsStore = defineStore('hotelsStore', {
       const hotelName = filters?.name
 
       let result = hotelsStorage
+      const selectedSort = this.sortedBy === 'price' ? 'orderByPrice' : ('orderByStars' as const)
 
       if (placeId) {
-        result = result.filterByPlace(placeId)
+        result = result.filterByPlace(placeId)[selectedSort]({
+          desc: this.sortedBy === 'rating',
+        })
       }
 
       if (hotelName) {
-        result = result.filterByName({ name: hotelName })
+        result = result.filterByName({ name: hotelName })[selectedSort]({
+          desc: this.sortedBy === 'rating',
+        })
       }
 
       const hotelsResult = result.getHotels(1)
